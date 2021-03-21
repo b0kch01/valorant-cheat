@@ -2,7 +2,7 @@
 
 <div align=center>
   
-  <img src="./images/valorantLogo.png" width=200>
+  <img src="./images/valorantLogo.png" width=100>
   
   # Valorant Cheat
   ```
