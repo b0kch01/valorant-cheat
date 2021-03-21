@@ -1,8 +1,7 @@
 # Valorant (any game really) trigger bot
 # Made with ♥ by b0kch01
 
-import ctypes
-from elevate import elevate
+import os
 import win32api
 import win32gui
 import keyboard
@@ -11,21 +10,26 @@ import d3dshot
 import numpy as np
 from pynput import mouse
 from pynput.mouse import Controller, Button
+from pyfiglet import Figlet
+from termcolor import cprint
+import colorama
 
-# Getting admin so that the program can click on Valorant
-if ctypes.windll.shell32.IsUserAnAdmin() != 0:
-    elevate(show_console=False)
+# Fix legacy console color
+colorama.init()
+
 
 # CONSTANTS
 BOX_LENGTH = 4 # Screen capture size
 SCREEN_X = win32api.GetSystemMetrics(0) # Auto-fetched (doesn't always work)
 SCREEN_Y = win32api.GetSystemMetrics(1)
 
+print(SCREEN_X, SCREEN_Y)
+
 # Calculating box coorinates
-X1 = int((SCREEN_X - BOX_LENGTH)/2)
-Y1 = int((SCREEN_Y - BOX_LENGTH)/2)
-X2 = int(SCREEN_X + BOX_LENGTH)
-Y2 = int(SCREEN_Y + BOX_LENGTH)
+X1 = int(SCREEN_X/2 - BOX_LENGTH/2)
+Y1 = int(SCREEN_Y/2 - BOX_LENGTH/2)
+X2 = int(X1 + BOX_LENGTH)
+Y2 = int(Y1 + BOX_LENGTH)
 
 REGION = (X1, Y1, X2, Y2)
 
@@ -47,20 +51,39 @@ def time_elapsed(start_time):
     return str(int((time.time() - start_time)*1000)) + "ms"
 
 
-if __name__ == "main":
-    current_pixel = rgb_pixel()
+# User Interface
+def titlescreen():
+    # os.system("cls")
+    f = Figlet(font="ogre")
+    print(f.renderText("Valorant Cheat")[:-3])
+    cprint(" Created with ♥ by b0kch01! ", "grey", "on_white")
+    cprint(" USE AT YOUR OWN RISK       ", "grey", "on_yellow")
 
+    print("\nRemember, hold [esc] to exit the program")
+    print("Enjoy! :)\n")
+
+    cprint("Current keybind: [ALT]\n", "green")
+
+
+# MAIN SCRIPT
+titlescreen()
+current_pixel = rgb_pixel()
+
+try:
     while True:
         timeS = time.time()
         new_pixel = rgb_pixel()
 
-        if keyboard.is_pressed("alt") and abs(current_pixel - new_pixel) > 5:
-            mouse.click(Button.left)
-            print("clicked with " + time_elapsed(timeS))
+        if keyboard.is_pressed("alt"):
+            if abs(current_pixel - new_pixel) > 5:
+                mouse.click(Button.left)
+                print("[¤] Clicked within " + time_elapsed(timeS))
 
         current_pixel = new_pixel
 
         # Stopping program
         if keyboard.is_pressed("esc"): break
+except KeyboardInterrupt:
+    pass
 
 print("Program exited.")
