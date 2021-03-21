@@ -4,4 +4,3 @@ colorama==0.4.3
 pywin32==227
 d3dshot==0.1.5
 pynput==1.6.8
-win32gui==221.6

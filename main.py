@@ -1,7 +1,11 @@
 # Valorant (any game really) trigger bot
 # Made with ♥ by b0kch01
 
-import os
+import os, ctypes
+if os.name != "nt":
+    input("Windows support only. Press [Enter] to close")
+    exit(0)
+
 import win32api
 import win32gui
 import keyboard
@@ -11,19 +15,18 @@ import numpy as np
 from pynput import mouse
 from pynput.mouse import Controller, Button
 from pyfiglet import Figlet
-from termcolor import cprint
+from termcolor import cprint, colored
 import colorama
+
 
 # Fix legacy console color
 colorama.init()
 
-
 # CONSTANTS
+KEYBIND = "alt" # Default keybind
 BOX_LENGTH = 4 # Screen capture size
 SCREEN_X = win32api.GetSystemMetrics(0) # Auto-fetched (doesn't always work)
 SCREEN_Y = win32api.GetSystemMetrics(1)
-
-print(SCREEN_X, SCREEN_Y)
 
 # Calculating box coorinates
 X1 = int(SCREEN_X/2 - BOX_LENGTH/2)
@@ -32,6 +35,16 @@ X2 = int(X1 + BOX_LENGTH)
 Y2 = int(Y1 + BOX_LENGTH)
 
 REGION = (X1, Y1, X2, Y2)
+
+cprint("Setting up...")
+cprint(" - [¤] Windows", "green")
+cprint(f" - [¤] {SCREEN_X}x{SCREEN_Y}", "green")
+
+if ctypes.windll.shell32.IsUserAnAdmin() == 0:
+    cprint(" - [x] Please run as administrator", "red")
+    exit(0)
+
+cprint(f" - [¤] {SCREEN_X}x{SCREEN_Y}", "green")
 
 # Disable click delay (100ms)
 win32gui.GetDoubleClickTime = lambda: 0;
@@ -52,38 +65,64 @@ def time_elapsed(start_time):
 
 
 # User Interface
+f = Figlet(font="ogre")
+
+CACHED_TITLESCREEN = f"""
+{ f.renderText("Valorant Cheat")[:-3] }
+{ colored(" Created with ♥ by b0kch01! ", "grey", "on_white") }
+{ colored(" USE AT YOUR OWN RISK       ", "grey", "on_yellow") }
+
+Enjoy! :)
+"""
+
+def clear():
+    os.system("cls")
+
 def titlescreen():
-    # os.system("cls")
-    f = Figlet(font="ogre")
-    print(f.renderText("Valorant Cheat")[:-3])
-    cprint(" Created with ♥ by b0kch01! ", "grey", "on_white")
-    cprint(" USE AT YOUR OWN RISK       ", "grey", "on_yellow")
-
-    print("\nRemember, hold [esc] to exit the program")
-    print("Enjoy! :)\n")
-
-    cprint("Current keybind: [ALT]\n", "green")
+    clear()
+    print(CACHED_TITLESCREEN)
 
 
 # MAIN SCRIPT
-titlescreen()
-current_pixel = rgb_pixel()
+
 
 try:
-    while True:
-        timeS = time.time()
-        new_pixel = rgb_pixel()
+    titlescreen()
+    if input("Set custom keybind? (yes/no): ")[:1] in "yY":
+        titlescreen()
+        print(f"Current keybind: [{colored(KEYBIND, 'green')}]")
+        print("\nPress [ESC] to continue")
+        
+        new_key = KEYBIND
 
-        if keyboard.is_pressed("alt"):
+        while True:
+            new_key = keyboard.read_key()
+
+            if new_key == "esc":
+                break
+            elif new_key != KEYBIND:
+                KEYBIND = new_key
+                titlescreen()
+                print(f"Current keybind: [{colored(KEYBIND, 'green')}]")
+                print("\nPress [ESC] to continue")
+
+    titlescreen()
+    print(f"Current keybind: [{colored(KEYBIND, 'green')}]")
+
+    current_pixel = rgb_pixel()
+
+    while True:
+        if keyboard.is_pressed(KEYBIND):
+            timeS = time.time()
+            new_pixel = rgb_pixel()
+
             if abs(current_pixel - new_pixel) > 5:
                 mouse.click(Button.left)
                 print("[¤] Clicked within " + time_elapsed(timeS))
 
-        current_pixel = new_pixel
-
-        # Stopping program
-        if keyboard.is_pressed("esc"): break
+            current_pixel = new_pixel
 except KeyboardInterrupt:
     pass
 
-print("Program exited.")
+cprint("\n~ Program exited ;-;", "grey", "on_red")
+time.sleep(1)
