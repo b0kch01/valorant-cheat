@@ -46,6 +46,8 @@ if ctypes.windll.shell32.IsUserAnAdmin() == 0:
 
 cprint(f" - [¤] {SCREEN_X}x{SCREEN_Y}", "green")
 
+time.sleep(0.5)
+
 # Disable click delay (100ms)
 win32gui.GetDoubleClickTime = lambda: 0;
 
@@ -124,7 +126,8 @@ try:
             current_pixel = new_pixel
         else:
             current_pixel = rgb_pixel()
-            time.sleep(0.5)
+            time.sleep(0.05)
+
 except KeyboardInterrupt:
     pass
 
