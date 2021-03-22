@@ -1,6 +1,0 @@
-termcolor==1.1.0
-keyboard==0.13.5
-colorama==0.4.3
-pywin32==227
-d3dshot==0.1.5
-pynput==1.6.8

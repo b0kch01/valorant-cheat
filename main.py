@@ -6,6 +6,10 @@ if os.name != "nt":
     input("Windows support only. Press [Enter] to close")
     exit(0)
 
+# Disable quick-edit mode (pauses bot)
+kernel32 = ctypes.windll.kernel32
+kernel32.SetConsoleMode(kernel32.GetStdHandle(-10), 128)
+
 import win32api
 import win32gui
 import keyboard
