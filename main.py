@@ -108,6 +108,7 @@ try:
 
     titlescreen()
     print(f"Current keybind: [{colored(KEYBIND, 'green')}]")
+    cprint("\nReady to frag.", "green")
 
     current_pixel = rgb_pixel()
 
@@ -121,6 +122,9 @@ try:
                 print("[¤] Clicked within " + time_elapsed(timeS))
 
             current_pixel = new_pixel
+        else:
+            current_pixel = rgb_pixel()
+            time.sleep(0.5)
 except KeyboardInterrupt:
     pass
 
