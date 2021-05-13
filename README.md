@@ -11,6 +11,10 @@
   
 </div>
 
+
+https://user-images.githubusercontent.com/44041512/118185317-402b4580-b3f1-11eb-98f6-46be9f5559ec.mp4
+
+
 ## How to use
 1. Download
 2. Run the executable (make sure to allow admin rights)
