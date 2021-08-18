@@ -4,9 +4,9 @@
   
   <img src="./images/valorantLogo.png" width=100>
   
-  # Valorant Cheat
+  # VALORANT Cheat
   ```
-  💎 Valorant triggerbot built in Python (use at your own risk!)
+  💎 VALORANT triggerbot built in Python (use at your own risk!)
   ```
   
 </div>
