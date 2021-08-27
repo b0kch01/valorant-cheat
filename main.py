@@ -2,9 +2,6 @@
 # Made with ♥ by b0kch01
 
 import os, ctypes
-if os.name != "nt":
-    input("Windows support only. Press [Enter] to close")
-    exit(0)
 
 # Disable quick-edit mode (pauses bot)
 kernel32 = ctypes.windll.kernel32
