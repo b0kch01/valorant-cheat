@@ -1,32 +1,31 @@
 # Valorant (any game really) trigger bot
 # Made with ♥ by b0kch01
 
-import os, ctypes
+import colorama
+from termcolor import cprint, colored
+from pyfiglet import Figlet
+from pynput.mouse import Controller, Button
+from pynput import mouse
+import numpy as np
+import d3dshot
+import time
+import keyboard
+import win32gui
+import win32api
+import os
+import ctypes
 
 # Disable quick-edit mode (pauses bot)
 kernel32 = ctypes.windll.kernel32
 kernel32.SetConsoleMode(kernel32.GetStdHandle(-10), 128)
 
-import win32api
-import win32gui
-import keyboard
-import time
-import d3dshot
-import numpy as np
-from pynput import mouse
-from pynput.mouse import Controller, Button
-from pyfiglet import Figlet
-from termcolor import cprint, colored
-import colorama
-
-
 # Fix legacy console color
 colorama.init()
 
 # CONSTANTS
-KEYBIND = "alt" # Default keybind
-BOX_LENGTH = 4 # Screen capture size
-SCREEN_X = win32api.GetSystemMetrics(0) # Auto-fetched (doesn't always work)
+KEYBIND = "alt"  # Default keybind
+BOX_LENGTH = 4  # Screen capture size
+SCREEN_X = win32api.GetSystemMetrics(0)  # Auto-fetched (doesn't always work)
 SCREEN_Y = win32api.GetSystemMetrics(1)
 
 # Calculating box coorinates
@@ -50,7 +49,7 @@ cprint(f" - [¤] {SCREEN_X}x{SCREEN_Y}", "green")
 time.sleep(0.5)
 
 # Disable click delay (100ms)
-win32gui.GetDoubleClickTime = lambda: 0;
+win32gui.GetDoubleClickTime = lambda: 0
 
 # Instantiate mouse controller
 mouse = Controller()
@@ -58,9 +57,11 @@ mouse = Controller()
 # Instantiate screen capture (numpy is the fastest)
 d = d3dshot.create(capture_output="numpy")
 
+
 # Grabs center screen as an average pixel value
 def rgb_pixel():
-	return np.average(d.screenshot(region=REGION))
+    return np.average(d.screenshot(region=REGION))
+
 
 # Given start time, returns time elapsed in ms
 def time_elapsed(start_time):
@@ -78,24 +79,26 @@ CACHED_TITLESCREEN = f"""
 Enjoy! :)
 """
 
+
+# Clears console
 def clear():
     os.system("cls")
 
+
+# Prints titlescreen
 def titlescreen():
     clear()
     print(CACHED_TITLESCREEN)
 
 
 # MAIN SCRIPT
-
-
 try:
     titlescreen()
     if input("Set custom keybind? (yes/no): ")[:1] in "yY":
         titlescreen()
         print(f"Current keybind: [{colored(KEYBIND, 'green')}]")
         print("\nPress [ESC] to continue")
-        
+
         new_key = KEYBIND
 
         while True:
