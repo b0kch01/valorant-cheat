@@ -23,7 +23,7 @@ kernel32.SetConsoleMode(kernel32.GetStdHandle(-10), 128)
 colorama.init()
 
 # CONSTANTS
-KEYBIND = "alt"  # Default keybind
+KEYBIND = "shift"  # Default keybind
 BOX_LENGTH = 4  # Screen capture size
 SCREEN_X = win32api.GetSystemMetrics(0)  # Auto-fetched (doesn't always work)
 SCREEN_Y = win32api.GetSystemMetrics(1)
