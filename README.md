@@ -9,8 +9,6 @@
   
 </div>
 
-https://user-images.githubusercontent.com/44041512/118185317-402b4580-b3f1-11eb-98f6-46be9f5559ec.mp4
-
 ## Instructions
 1. [Download](https://github.com/b0kch01/valorant-cheat/releases/latest) the executable `NotASketchFileName.exe`
 2. Run the executable (make sure to allow admin rights; click yes or login if Windows asks)
