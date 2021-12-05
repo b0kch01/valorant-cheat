@@ -1,4 +1,10 @@
+
+
 <div align=center>
+
+  ```
+  🚫 Update 12/5: Cheat has been detected by VANGUARD; proceed with caution
+  ```
   
   <img src="./images/valorantLogo.png" width=100>
   
